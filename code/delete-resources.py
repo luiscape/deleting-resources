@@ -17,7 +17,6 @@ from termcolor import colored as color
 apikey = 'XXX'  # consider adding key via cli
 gallery_path = 'data/gallery_items.json'
 verbose = True
-http_auth = ('XXX', 'YYY')
 
 # Loading data from a local resource.
 def loadData(p, verbose=verbose):
@@ -60,7 +59,7 @@ def deleteResources(gallery_dict, apikey, verbose=verbose):
     return
 
   # Base config.
-  resource_delete_url = 'https://test-data.hdx.rwlabs.org/api/action/resource_delete'
+  resource_delete_url = 'https://data.hdx.rwlabs.org/api/action/resource_delete'
   headers = { 'X-CKAN-API-Key': apikey, 'content-type': 'application/json' }
 
   for item in gallery_dict:
@@ -73,7 +72,7 @@ def deleteResources(gallery_dict, apikey, verbose=verbose):
 
     # Action
     u = { 'id': item["id"] }
-    requests.post(resource_delete_url, data=json.dumps(u), headers=headers, auth=http_auth)
+    requests.post(resource_delete_url, data=json.dumps(u), headers=headers)
 
 
 try:
