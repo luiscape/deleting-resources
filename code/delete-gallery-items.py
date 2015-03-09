@@ -16,7 +16,7 @@ from termcolor import colored as color
 ###################
 apikey = 'XXX'  # consider adding key via cli
 gallery_path = 'data/gallery_items.json'
-verbose = True
+verbose = False
 
 # Loading data from a local resource.
 def loadData(p, verbose=verbose):
@@ -47,7 +47,7 @@ def deleteResources(gallery_dict, apikey, verbose=verbose):
   print "--------------------------------------------------"
   print "//////////////////////////////////////////////////"
   print "--------------------------------------------------"
-  print "///////////// DELETING RESOURCES /////////////////"
+  print "/////////// DELETING GALLERY ITEMS ///////////////"
   print "--------------------------------------------------"
   print "//////////////////////////////////////////////////"
   print "--------------------------------------------------"
@@ -59,20 +59,30 @@ def deleteResources(gallery_dict, apikey, verbose=verbose):
     return
 
   # Base config.
-  resource_delete_url = 'https://data.hdx.rwlabs.org/api/action/resource_delete'
+  related_delete_url = 'https://data.hdx.rwlabs.org/api/action/related_delete?id='
   headers = { 'X-CKAN-API-Key': apikey, 'content-type': 'application/json' }
 
   for item in gallery_dict:
     # Deleting previous resources to make sure
     # the new batch is the most up-to-date.
 
-    # Message
-    message = color("RESOURCE DELETED", "green", attrs=['bold'])
-    print "%s : %s" % (item["id"], message)
-
     # Action
     u = { 'id': item["id"] }
-    requests.post(resource_delete_url, data=json.dumps(u), headers=headers)
+    re = requests.post(related_delete_url, data=json.dumps(u), headers=headers)
+
+    if verbose is True:
+      print "Status code: ", re.status_code
+      print re.json()
+
+    if re.status_code != 200:
+      message = color("FAIL", "red", attrs=['bold'])
+      print "%s : %s" % (item["url"], message)
+
+    else:
+      message = color("SUCCESS", "green", attrs=['bold'])
+      print "%s : %s" % (item["url"], message)
+
+  print "--------------------------------------------------"
 
 
 try:
