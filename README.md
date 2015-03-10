@@ -22,8 +22,10 @@ Script to delete gallery items from HDX. It takes a JSON file as input (together
 Make sure to install the dependencies on `requirements.txt` and run the following: 
 
 ```bash
-$ python code/delete-gallery-items.py API-KEY
+$ python code/delete-gallery-items.py
 ```
+
+Remember to add your API key inside the `delete-gallery-item.py` script.
 
 Given you have the right permissions, you will see all the gallery items being deleted one at a time.
 
