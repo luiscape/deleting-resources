@@ -1,10 +1,4 @@
-
-# Script to extract features from GeoJSON files
-# making the resulting files a collection of features
-# without the proper GeoJSON "wrapper".
-
-## TODO:
-# - Create function to delete all datasets from UNOSAT.
+# Script to delete gallery items from HDX in bulk.
 
 import sys
 import yajl as json
@@ -15,8 +9,8 @@ from termcolor import colored as color
 ## Configuration ##
 ###################
 apikey = 'XXX'  # consider adding key via cli
-gallery_path = 'data/gallery_items.json'
-verbose = False
+gallery_path = 'data/gallery_items.json'  # JSON array with all the gallery items to be deleted.
+verbose = False  # for debugging.
 
 # Loading data from a local resource.
 def loadData(p, verbose=verbose):
